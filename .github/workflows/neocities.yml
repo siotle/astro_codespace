@@ -19,6 +19,7 @@ jobs:
       - name: Build static pages with astro
         run: |
           cd ${{github.workspace}}/whole-wavelength
+          npm install
           npm run build
       - name: Deploy to Neocities
         uses: bcomnes/deploy-to-neocities@v3.0.4
