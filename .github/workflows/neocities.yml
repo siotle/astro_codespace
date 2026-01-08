@@ -1,0 +1,30 @@
+name: Deploy to Neocities
+
+on:
+  push:
+    branches:
+      -main
+
+concurrency:
+  group: deploy-to-neocities
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+      - name: Build static pages with astro
+        run: |
+          cd ${{github.workspace}}
+          npm run build
+      - name: Deploy to Neocities
+        uses: bcomnes/deploy-to-neocities@v3.0.4
+        with:
+          api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+          cleanup: true
+          dist_dir: ${{github.workspace}}/whole-wavelength/dist/
+
+
